@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Load test report — endpoints.json</title>
+<style>
+  :root { color-scheme: light dark; --line:#8884; --muted:#888; --fail:#d4453a; --ok:#2e8b57; --accent:#3d6fb4; }
+  body { font: 14px/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 1080px; padding: 0 1rem; }
+  h1 { font-size: 1.4rem; } h2 { font-size: 1.15rem; margin-top: 2.5rem; }
+  table { border-collapse: collapse; width: 100%; margin: .75rem 0; }
+  th, td { padding: .35rem .6rem; text-align: right; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-weight: 600; }
+  .muted { color: var(--muted); }
+  .fail { color: var(--fail); font-weight: 600; } .pass { color: var(--ok); font-weight: 600; }
+  .tiles { display: flex; gap: 1rem; flex-wrap: wrap; margin: .75rem 0; }
+  .tile { border: 1px solid var(--line); border-radius: 8px; padding: .6rem 1rem; min-width: 8rem; }
+  .tile b { display: block; font-size: 1.3rem; }
+  svg { width: 100%; height: auto; }
+  figure { margin: 1rem 0; } figcaption { color: var(--muted); font-size: .85rem; }
+</style></head><body>
+<h1>Load test report</h1><p class="muted">config: /Users/dkaravind/source/repos/personal/bupa/paymentservices/LoadTester/samples/endpoints.json · started 2026-07-05 03:19:01Z · total 17.34s</p>
+<h2>smoke</h2>
+<p class="muted">constant c=5 15s · 15.14s measured</p>
+<div class="tiles">
+<div class="tile"><span class="muted">requests</span><b>1,683</b></div>
+<div class="tile"><span class="muted">rps</span><b>111.16</b></div>
+<div class="tile"><span class="muted">error rate</span><b>0%</b></div>
+<div class="tile"><span class="muted">p95</span><b>107ms</b></div>
+<div class="tile"><span class="muted">p99</span><b>119ms</b></div>
+</div>
+<table><tr><th>step</th><th>count</th><th>ok</th><th>fail</th><th>rps</th><th>min</th><th>mean</th><th>p50</th><th>p90</th><th>p95</th><th>p99</th><th>max</th></tr>
+<tr><td>list-payments</td><td>561</td><td>561</td><td>0</td><td>37.05</td><td>4.8ms</td><td>33.3ms</td><td>32.5ms</td><td>56.2ms</td><td>58.9ms</td><td>62.2ms</td><td>82.9ms</td></tr>
+<tr><td>create-payment</td><td>561</td><td>561</td><td>0</td><td>37.05</td><td>14.8ms</td><td>67.3ms</td><td>65.8ms</td><td>112ms</td><td>117ms</td><td>120ms</td><td>133ms</td></tr>
+<tr><td>get-payment</td><td>561</td><td>561</td><td>0</td><td>37.05</td><td>5.2ms</td><td>34.0ms</td><td>33.5ms</td><td>56.1ms</td><td>58.6ms</td><td>60.9ms</td><td>87.4ms</td></tr>
+<tr><td>TOTAL</td><td>1,683</td><td>1,683</td><td>0</td><td>111.16</td><td>4.8ms</td><td>44.8ms</td><td>40.1ms</td><td>86.7ms</td><td>107ms</td><td>119ms</td><td>133ms</td></tr>
+</table>
+<figure><figcaption>Throughput (requests per second) — <span style="color:var(--accent)">■</span> total · <span style="color:var(--fail)">■</span> failed</figcaption><svg viewBox="0 0 1000 260" role="img"><line x1="56" y1="226" x2="984" y2="226" stroke="var(--line)" stroke-width="1"/><text x="50" y="230" text-anchor="end" font-size="11" fill="var(--muted)">0</text><line x1="56" y1="173.5" x2="984" y2="173.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="177.5" text-anchor="end" font-size="11" fill="var(--muted)">32.1</text><line x1="56" y1="121" x2="984" y2="121" stroke="var(--line)" stroke-width="1"/><text x="50" y="125" text-anchor="end" font-size="11" fill="var(--muted)">64.3</text><line x1="56" y1="68.5" x2="984" y2="68.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="72.5" text-anchor="end" font-size="11" fill="var(--muted)">96.4</text><line x1="56" y1="16" x2="984" y2="16" stroke="var(--line)" stroke-width="1"/><text x="50" y="20" text-anchor="end" font-size="11" fill="var(--muted)">128.5</text><text x="56" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">0s</text><text x="241.6" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">3s</text><text x="427.2" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">6s</text><text x="612.8" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">9s</text><text x="798.4" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">12s</text><text x="984" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">15s</text><polyline points="56,39.73 117.87,62.6 179.73,44.63 241.6,46.26 303.47,34.82 365.33,36.46 427.2,31.56 489.07,38.09 550.93,39.73 612.8,52.8 674.67,39.73 736.53,49.53 798.4,49.53 860.27,34.82 922.13,56.07 984,209.66" fill="none" stroke="var(--accent)" stroke-width="1.8"/><polyline points="56,226 117.87,226 179.73,226 241.6,226 303.47,226 365.33,226 427.2,226 489.07,226 550.93,226 612.8,226 674.67,226 736.53,226 798.4,226 860.27,226 922.13,226 984,226" fill="none" stroke="var(--fail)" stroke-width="1.8"/></svg></figure>
+<figure><figcaption>Latency (ms) — <span style="color:var(--accent)">■</span> p95 · <span style="color:var(--ok)">■</span> mean</figcaption><svg viewBox="0 0 1000 260" role="img"><line x1="56" y1="226" x2="984" y2="226" stroke="var(--line)" stroke-width="1"/><text x="50" y="230" text-anchor="end" font-size="11" fill="var(--muted)">0</text><line x1="56" y1="173.5" x2="984" y2="173.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="177.5" text-anchor="end" font-size="11" fill="var(--muted)">32.1</text><line x1="56" y1="121" x2="984" y2="121" stroke="var(--line)" stroke-width="1"/><text x="50" y="125" text-anchor="end" font-size="11" fill="var(--muted)">64.2</text><line x1="56" y1="68.5" x2="984" y2="68.5" stroke="var(--line)" stroke-width="1"/><text x="50" y="72.5" text-anchor="end" font-size="11" fill="var(--muted)">96.3</text><line x1="56" y1="16" x2="984" y2="16" stroke="var(--line)" stroke-width="1"/><text x="50" y="20" text-anchor="end" font-size="11" fill="var(--muted)">128.4</text><text x="56" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">0s</text><text x="241.6" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">3s</text><text x="427.2" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">6s</text><text x="612.8" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">9s</text><text x="798.4" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">12s</text><text x="984" y="248" text-anchor="middle" font-size="11" fill="var(--muted)">15s</text><polyline points="56,78.02 117.87,39.52 179.73,50.48 241.6,44.89 303.47,50.22 365.33,50.06 427.2,53.3 489.07,58.27 550.93,46.3 612.8,51.47 674.67,43.14 736.53,42.6 798.4,67.22 860.27,71.7 922.13,36.84 984,31.56" fill="none" stroke="var(--accent)" stroke-width="1.8"/><polyline points="56,157.91 117.87,144.3 179.73,149.91 241.6,152.59 303.47,155.31 365.33,157.43 427.2,155 489.07,156.35 550.93,152.8 612.8,150.05 674.67,153.88 736.53,151.17 798.4,149.81 860.27,155.67 922.13,147.96 984,119.85" fill="none" stroke="var(--ok)" stroke-width="1.8"/></svg></figure>
+<h2>Thresholds</h2><table><tr><th>scenario</th><th>rule</th><th>limit</th><th>actual</th><th>result</th></tr>
+<tr><td>smoke</td><td style="text-align:left">maxErrorRatePercent</td><td>1</td><td>0</td><td class="pass">PASS</td></tr>
+<tr><td>smoke</td><td style="text-align:left">maxP95Ms</td><td>2000</td><td>106.76</td><td class="pass">PASS</td></tr>
+</table>
+</body></html>

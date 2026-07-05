@@ -1,0 +1,126 @@
+// Demo config for the bundled MockApi (dotnet run --project samples/LoadTester.MockApi).
+// JSON comments and trailing commas are allowed in config files.
+{
+  "settings": {
+    "baseAddress": "http://localhost:5089",
+    "defaultHeaders": {
+      "Accept": "application/json"
+    },
+    "requestTimeoutSeconds": 10,
+    "maxConnectionsPerServer": 512,
+    "runScenariosInParallel": false,
+    "reports": {
+      "folder": "reports",
+      "formats": [ "console", "json", "html", "csv" ]
+    }
+  },
+
+  "endpoints": [
+    {
+      "name": "list-payments",
+      "method": "GET",
+      "path": "/api/payments?page={{randomInt:1:20}}"
+    },
+    {
+      "name": "create-payment",
+      "method": "POST",
+      "path": "/api/payments",
+      "expectedStatusCodes": [ 201 ],
+      "bodyTemplate": "{ \"storeId\": \"{{data.storeId}}\", \"cardId\": \"{{data.cardId}}\", \"userName\": \"loadtest\", \"createdBy\": \"loadtester\", \"applicationBatchId\": \"{{guid}}\", \"transactions\": [ { \"amount\": {{randomDouble:5:250:2}}, \"currency\": \"GBP\", \"transactionType\": \"PAYMENT\" } ] }"
+    },
+    {
+      "name": "get-payment",
+      "method": "GET",
+      "path": "/api/payments/{{vars.paymentId}}"
+    },
+    {
+      "name": "slow-endpoint",
+      "method": "GET",
+      "path": "/api/slow",
+      "timeoutSeconds": 5
+    }
+  ],
+
+  "scenarios": [
+    {
+      // Quick sanity check: a handful of virtual users for 15 seconds.
+      "name": "smoke",
+      "enabled": true,
+      "warmup": { "durationSeconds": 2, "concurrency": 2 },
+      "steps": [
+        { "endpoint": "list-payments" },
+        {
+          "endpoint": "create-payment",
+          "capture": [ { "jsonPath": "$.id", "as": "paymentId" } ]
+        },
+        { "endpoint": "get-payment" }
+      ],
+      "dataFeed": { "file": "data/cards.csv", "mode": "circular" },
+      "phases": [
+        { "type": "constant", "concurrency": 5, "durationSeconds": 15 }
+      ],
+      "thresholds": {
+        "maxErrorRatePercent": 1,
+        "maxP95Ms": 2000
+      }
+    },
+    {
+      // Full payment journey under ramping then sustained closed-model load.
+      "name": "payment-journey",
+      "enabled": false,
+      "warmup": { "durationSeconds": 5, "concurrency": 5 },
+      "steps": [
+        { "endpoint": "list-payments" },
+        {
+          "endpoint": "create-payment",
+          "capture": [ { "jsonPath": "$.id", "as": "paymentId" } ],
+          "pauseAfterSeconds": 0.2
+        },
+        { "endpoint": "get-payment" }
+      ],
+      "dataFeed": { "file": "data/cards.csv", "mode": "random" },
+      "phases": [
+        { "type": "ramp", "from": 1, "to": 50, "durationSeconds": 30 },
+        { "type": "constant", "concurrency": 50, "durationSeconds": 60 },
+        { "type": "ramp", "from": 50, "to": 0, "durationSeconds": 10 }
+      ],
+      "thresholds": {
+        "maxErrorRatePercent": 2,
+        "maxP95Ms": 3000,
+        "minRequestsPerSecond": 20
+      }
+    },
+    {
+      // Open-model arrival rate: keeps injecting even when responses lag —
+      // this is what exposes queueing collapse under load.
+      "name": "arrival-rate-spike",
+      "enabled": false,
+      "steps": [
+        { "endpoint": "list-payments" }
+      ],
+      "phases": [
+        { "type": "injectRate", "ratePerSecond": 50, "durationSeconds": 20 },
+        { "type": "rampRate", "from": 50, "to": 300, "durationSeconds": 30 },
+        { "type": "injectRate", "ratePerSecond": 300, "durationSeconds": 20 },
+        { "type": "pause", "durationSeconds": 5 },
+        { "type": "injectRate", "ratePerSecond": 50, "durationSeconds": 10 }
+      ],
+      "maxPendingRequests": 5000,
+      "thresholds": {
+        "maxErrorRatePercent": 5,
+        "maxP99Ms": 5000
+      }
+    },
+    {
+      // Demonstrates timeouts and error reporting against the degraded endpoint.
+      "name": "slow-endpoint-probe",
+      "enabled": false,
+      "steps": [
+        { "endpoint": "slow-endpoint" }
+      ],
+      "phases": [
+        { "type": "constant", "concurrency": 10, "durationSeconds": 20 }
+      ]
+    }
+  ]
+}

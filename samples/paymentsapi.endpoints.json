@@ -1,0 +1,74 @@
+// Config for the real PaymentsApi in this repo (dotnet run --project ../PaymentsApi).
+// Adjust baseAddress to wherever it listens (Kestrel default shown).
+{
+  "settings": {
+    "baseAddress": "http://localhost:5000",
+    "defaultHeaders": {
+      "Accept": "application/json"
+    },
+    "requestTimeoutSeconds": 75, // above the observed 50-60s degraded latency so we measure it instead of timing out
+    "reports": {
+      "folder": "reports",
+      "formats": [ "console", "json", "html", "csv" ]
+    }
+  },
+
+  "endpoints": [
+    {
+      "name": "health",
+      "method": "GET",
+      "path": "/health"
+    },
+    {
+      "name": "one-off-payment",
+      "method": "POST",
+      "path": "/payments",
+      "bodyTemplate": "{ \"storeId\": \"{{data.storeId}}\", \"cardId\": \"{{data.cardId}}\", \"userName\": \"loadtest-user\", \"createdBy\": \"loadtester\", \"applicationBatchId\": \"LT-{{guid}}\", \"transactions\": [ { \"amount\": {{randomDouble:10:400:2}}, \"currency\": \"GBP\", \"transactionType\": \"PAYMENT\" } ] }"
+    }
+  ],
+
+  "scenarios": [
+    {
+      // Baseline: single user, confirms the 2-3s happy path before loading.
+      "name": "baseline",
+      "enabled": true,
+      "steps": [ { "endpoint": "one-off-payment" } ],
+      "dataFeed": { "file": "data/cards.csv", "mode": "circular" },
+      "phases": [
+        { "type": "constant", "concurrency": 1, "durationSeconds": 60 }
+      ],
+      "thresholds": {
+        "maxErrorRatePercent": 1,
+        "maxP95Ms": 4000
+      }
+    },
+    {
+      // Reproduces the reported degradation: ramp to concurrent load and hold.
+      "name": "degradation-repro",
+      "enabled": false,
+      "warmup": { "durationSeconds": 10, "concurrency": 1 },
+      "steps": [ { "endpoint": "one-off-payment" } ],
+      "dataFeed": { "file": "data/cards.csv", "mode": "random" },
+      "phases": [
+        { "type": "ramp", "from": 1, "to": 25, "durationSeconds": 60 },
+        { "type": "constant", "concurrency": 25, "durationSeconds": 180 }
+      ],
+      "thresholds": {
+        "maxErrorRatePercent": 2,
+        "maxP95Ms": 5000
+      }
+    },
+    {
+      // Open model: fixed arrival rate regardless of response times — shows queueing collapse.
+      "name": "arrival-rate",
+      "enabled": false,
+      "steps": [ { "endpoint": "one-off-payment" } ],
+      "dataFeed": { "file": "data/cards.csv", "mode": "random" },
+      "phases": [
+        { "type": "rampRate", "from": 1, "to": 10, "durationSeconds": 60 },
+        { "type": "injectRate", "ratePerSecond": 10, "durationSeconds": 120 }
+      ],
+      "maxPendingRequests": 2000
+    }
+  ]
+}

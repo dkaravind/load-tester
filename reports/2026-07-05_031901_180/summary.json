@@ -1,0 +1,288 @@
+{
+  "startedUtc": "2026-07-05T03:19:01.180305Z",
+  "configFile": "/Users/dkaravind/source/repos/personal/bupa/paymentservices/LoadTester/samples/endpoints.json",
+  "totalDurationSeconds": 17.34,
+  "interrupted": false,
+  "scenarios": [
+    {
+      "name": "smoke",
+      "measuredDurationSeconds": 15.14,
+      "phases": [
+        "constant c=5 15s"
+      ],
+      "iterationsCompleted": 561,
+      "iterationsFailed": 0,
+      "iterationsThrottled": 0,
+      "iterationsAbandoned": 0,
+      "totals": {
+        "name": "TOTAL",
+        "count": 1683,
+        "ok": 1683,
+        "failed": 0,
+        "requestsPerSecond": 111.16,
+        "bytesReceived": 1305209,
+        "latency": {
+          "min": 4.85,
+          "mean": 44.84,
+          "stdDev": 27.55,
+          "p50": 40.14,
+          "p75": 57.6,
+          "p90": 86.68,
+          "p95": 106.76,
+          "p99": 118.89,
+          "max": 132.66
+        },
+        "okLatency": {
+          "min": 4.85,
+          "mean": 44.84,
+          "stdDev": 27.55,
+          "p50": 40.14,
+          "p75": 57.6,
+          "p90": 86.68,
+          "p95": 106.76,
+          "p99": 118.89,
+          "max": 132.66
+        },
+        "statusCodes": {
+          "200": 1122,
+          "201": 561
+        },
+        "errors": []
+      },
+      "steps": [
+        {
+          "name": "list-payments",
+          "count": 561,
+          "ok": 561,
+          "failed": 0,
+          "requestsPerSecond": 37.05,
+          "bytesReceived": 1107193,
+          "latency": {
+            "min": 4.85,
+            "mean": 33.28,
+            "stdDev": 16.72,
+            "p50": 32.51,
+            "p75": 47.32,
+            "p90": 56.21,
+            "p95": 58.92,
+            "p99": 62.19,
+            "max": 82.89
+          },
+          "okLatency": {
+            "min": 4.85,
+            "mean": 33.28,
+            "stdDev": 16.72,
+            "p50": 32.51,
+            "p75": 47.32,
+            "p90": 56.21,
+            "p95": 58.92,
+            "p99": 62.19,
+            "max": 82.89
+          },
+          "statusCodes": {
+            "200": 561
+          },
+          "errors": []
+        },
+        {
+          "name": "create-payment",
+          "count": 561,
+          "ok": 561,
+          "failed": 0,
+          "requestsPerSecond": 37.05,
+          "bytesReceived": 99008,
+          "latency": {
+            "min": 14.81,
+            "mean": 67.28,
+            "stdDev": 31.08,
+            "p50": 65.75,
+            "p75": 93.48,
+            "p90": 112.41,
+            "p95": 116.62,
+            "p99": 119.99,
+            "max": 132.66
+          },
+          "okLatency": {
+            "min": 14.81,
+            "mean": 67.28,
+            "stdDev": 31.08,
+            "p50": 65.75,
+            "p75": 93.48,
+            "p90": 112.41,
+            "p95": 116.62,
+            "p99": 119.99,
+            "max": 132.66
+          },
+          "statusCodes": {
+            "201": 561
+          },
+          "errors": []
+        },
+        {
+          "name": "get-payment",
+          "count": 561,
+          "ok": 561,
+          "failed": 0,
+          "requestsPerSecond": 37.05,
+          "bytesReceived": 99008,
+          "latency": {
+            "min": 5.17,
+            "mean": 33.97,
+            "stdDev": 16.63,
+            "p50": 33.54,
+            "p75": 49.21,
+            "p90": 56.09,
+            "p95": 58.56,
+            "p99": 60.88,
+            "max": 87.43
+          },
+          "okLatency": {
+            "min": 5.17,
+            "mean": 33.97,
+            "stdDev": 16.63,
+            "p50": 33.54,
+            "p75": 49.21,
+            "p90": 56.09,
+            "p95": 58.56,
+            "p99": 60.88,
+            "max": 87.43
+          },
+          "statusCodes": {
+            "200": 561
+          },
+          "errors": []
+        }
+      ],
+      "timeSeries": [
+        {
+          "second": 0,
+          "count": 114,
+          "failed": 0,
+          "meanMs": 41.62,
+          "p95Ms": 90.45
+        },
+        {
+          "second": 1,
+          "count": 100,
+          "failed": 0,
+          "meanMs": 49.94,
+          "p95Ms": 113.98
+        },
+        {
+          "second": 2,
+          "count": 111,
+          "failed": 0,
+          "meanMs": 46.51,
+          "p95Ms": 107.28
+        },
+        {
+          "second": 3,
+          "count": 110,
+          "failed": 0,
+          "meanMs": 44.87,
+          "p95Ms": 110.7
+        },
+        {
+          "second": 4,
+          "count": 117,
+          "failed": 0,
+          "meanMs": 43.21,
+          "p95Ms": 107.44
+        },
+        {
+          "second": 5,
+          "count": 116,
+          "failed": 0,
+          "meanMs": 41.91,
+          "p95Ms": 107.54
+        },
+        {
+          "second": 6,
+          "count": 119,
+          "failed": 0,
+          "meanMs": 43.4,
+          "p95Ms": 105.56
+        },
+        {
+          "second": 7,
+          "count": 115,
+          "failed": 0,
+          "meanMs": 42.57,
+          "p95Ms": 102.52
+        },
+        {
+          "second": 8,
+          "count": 114,
+          "failed": 0,
+          "meanMs": 44.74,
+          "p95Ms": 109.84
+        },
+        {
+          "second": 9,
+          "count": 106,
+          "failed": 0,
+          "meanMs": 46.42,
+          "p95Ms": 106.68
+        },
+        {
+          "second": 10,
+          "count": 114,
+          "failed": 0,
+          "meanMs": 44.08,
+          "p95Ms": 111.77
+        },
+        {
+          "second": 11,
+          "count": 108,
+          "failed": 0,
+          "meanMs": 45.74,
+          "p95Ms": 112.1
+        },
+        {
+          "second": 12,
+          "count": 108,
+          "failed": 0,
+          "meanMs": 46.57,
+          "p95Ms": 97.05
+        },
+        {
+          "second": 13,
+          "count": 117,
+          "failed": 0,
+          "meanMs": 42.99,
+          "p95Ms": 94.31
+        },
+        {
+          "second": 14,
+          "count": 104,
+          "failed": 0,
+          "meanMs": 47.7,
+          "p95Ms": 115.62
+        },
+        {
+          "second": 15,
+          "count": 10,
+          "failed": 0,
+          "meanMs": 64.88,
+          "p95Ms": 118.85
+        }
+      ]
+    }
+  ],
+  "thresholds": [
+    {
+      "scenario": "smoke",
+      "rule": "maxErrorRatePercent",
+      "limit": 1,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "scenario": "smoke",
+      "rule": "maxP95Ms",
+      "limit": 2000,
+      "actual": 106.76,
+      "passed": true
+    }
+  ]
+}
